@@ -1,0 +1,1 @@
+Better UI for the compendium packs tab. Clearer and more compact.
