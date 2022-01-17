@@ -1,28 +1,28 @@
 //#compendium .compendium-type h3
 
 #compendium {
-    &.compendium-of-actor i.folder::before {
+    .compendium-of-actor i.folder::before {
         content: "\f0c0" !important; // .fa-users
     }
-    &.compendium-of-card i.folder::before {
+    .compendium-of-card i.folder::before {
         content: "\f2c1" !important; // .fa-id-badge
     }
-    &.compendium-of-item i.folder::before {
+    .compendium-of-item i.folder::before {
         content: "\f0f2" !important; // .fa-suitcase
     }
-    &.compendium-of-journalentry i.folder::before { 
+    .compendium-of-journalentry i.folder::before { 
         content: "\f518" !important; // .fa-book-open
     }
-    &.compendium-of-macro i.folder::before {
+    .compendium-of-macro i.folder::before {
         content: "\f70c" !important; // no icon for macros so using .fa-running
     }
-    &.compendium-of-playlist i.folder::before {
+    .compendium-of-playlist i.folder::before {
         content: "\f001" !important; // .fa-music
     }
-    &.compendium-of-rolltable i.folder::before {
+    .compendium-of-rolltable i.folder::before {
         content: "\f00b" !important; // .fa-th-list
     }
-    &.compendium-of-scene i.folder::before {
+    .compendium-of-scene i.folder::before {
         content: "\f279" !important; // .fa-map
     }
 

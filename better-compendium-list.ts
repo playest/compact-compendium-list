@@ -36,6 +36,16 @@ function renderCompendiumTree() {
         }
         h3.parentElement?.querySelector(".compendium-list")?.classList.add(documentClass);
     });
+
+    // Compatibility with compendium folders module
+    document.querySelectorAll("#compendium .entity-type").forEach(et => {
+        const documentClass = getDocumentClassFromTitle(et.innerHTML);
+        if(documentClass == undefined) {
+            console.error("Unindentified document class in compendium list:", et.innerHTML);
+            return;
+        }
+        et.closest(".compendium-pack")?.querySelector(".pack-title")?.classList.add(documentClass);
+    })
 }
 
 Hooks.once('init', () => {
