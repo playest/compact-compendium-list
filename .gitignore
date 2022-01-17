@@ -1,0 +1,6 @@
+*.js
+*.tgz
+*.zip
+*.map
+*.css
+/releases
