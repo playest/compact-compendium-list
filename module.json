@@ -13,7 +13,7 @@
   "manifest": "https://github.com/playest/better-compendium-list/releases/download/v0.0.1/module.json",
   "download": "https://github.com/playest/better-compendium-list/releases/download/v0.0.1/better-compendium-list-0.0.1.zip",
   "esmodules": [ "better-compendium-list.js" ],
-  "styles": [ "transferstuff.css" ],
+  "styles": [ "better-compendium-list.css" ],
   "license": "LICENSE",
   "readme": "README.md",
   "languages": []
