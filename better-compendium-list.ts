@@ -28,17 +28,8 @@ function getDocumentClassFromTitle(title: string) {
 }
 
 function renderCompendiumTree() {
-    document.querySelectorAll("#compendium .compendium-type h3").forEach(h3 => {
-        const documentClass = getDocumentClassFromTitle(h3.innerHTML);
-        if(documentClass == undefined) {
-            console.error("Unindentified document class in compendium list:", h3.innerHTML);
-            return;
-        }
-        h3.parentElement?.querySelector(".compendium-list")?.classList.add(documentClass);
-    });
-
-    // Compatibility with compendium folders module
-    document.querySelectorAll("#compendium .entity-type").forEach(et => {
+    // ".entity-type" is the class for the normal compendium packs tab, ".document-type" is for the compatibility with compendium folders module
+    document.querySelectorAll("#compendium .entity-type, #compendium .document-type").forEach(et => {
         const documentClass = getDocumentClassFromTitle(et.innerHTML);
         if(documentClass == undefined) {
             console.error("Unindentified document class in compendium list:", et.innerHTML);
