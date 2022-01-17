@@ -1,6 +1,6 @@
 //#compendium .compendium-type h3
 
-#compendium .compendium-type .compendium-list {
+#compendium {
     &.compendium-of-actor i.folder::before {
         content: "\f0c0" !important; // .fa-users
     }
@@ -31,15 +31,16 @@
     }
 
     .status-icons {
-        position: initial;
-        float: right;
+        position: initial !important;
+        float: right !important;
     }
 
     .pack-title, .compendium-footer, .status-icons {
         display: inline;
     }
 
-    .document-type {
+    .document-type,
+    .entity-type /* for compendium-folder module */ {
         display: none; // since we have chaned the icon (see .compendium-of-*) we can remove this
     }
 }
