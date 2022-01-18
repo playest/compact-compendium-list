@@ -1,5 +1,5 @@
 {
-  "name": "better-compendium-list",
+  "name": "compact-compendium-list",
   "title": "Better Compendium List",
   "description": "Better UI for the compendium packs tab. Clearer and more compact.",
   "authors": [{
@@ -9,11 +9,11 @@
   "version": "0.0.1",
   "compatibleCoreVersion": "9",
   "minimumCoreVersion": "9",
-  "url":"https://github.com/playest/better-compendium-list/",
-  "manifest": "https://github.com/playest/better-compendium-list/releases/download/v0.0.1/module.json",
-  "download": "https://github.com/playest/better-compendium-list/releases/download/v0.0.1/better-compendium-list-0.0.1.zip",
-  "esmodules": [ "better-compendium-list.js" ],
-  "styles": [ "better-compendium-list.css" ],
+  "url":"https://github.com/playest/compact-compendium-list/",
+  "manifest": "https://github.com/playest/compact-compendium-list/releases/download/v0.0.1/module.json",
+  "download": "https://github.com/playest/compact-compendium-list/releases/download/v0.0.1/compact-compendium-list-0.0.1.zip",
+  "esmodules": [ "compact-compendium-list.js" ],
+  "styles": [ "compact-compendium-list.css" ],
   "license": "LICENSE",
   "readme": "README.md",
   "languages": []
