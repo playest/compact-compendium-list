@@ -4,7 +4,7 @@ Better UI for the compendium packs tab. Clearer and more compact.
 
 Normal compendium packs tab without this module | Compendium packs tab with this module
 :---:|:---:
-![Normal compendium packs tab without this module](./examples/compendium%20packs%20tab%20-%20normal.png) | ![Compendium packs tab with this module](./examples/compendium%20packs%20tab%20-%20with%20better-compendium-list.png)
+![Normal compendium packs tab without this module](./examples/compendium%20packs%20tab%20-%20normal.png) | ![Compendium packs tab with this module](./examples/compendium%20packs%20tab%20-%20with%20compact-compendium-list.png)
 
 # Why not only CSS?
 
