@@ -4,6 +4,9 @@
     .compendium-of-actor i.folder::before {
         content: "\f0c0" !important; // .fa-users
     }
+    .compendium-of-adventure i.folder::before {
+        content: "\f6d9" !important; // .fa-users
+    }
     .compendium-of-card i.folder::before {
         content: "\f2c1" !important; // .fa-id-badge
     }

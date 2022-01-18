@@ -4,6 +4,9 @@ function getDocumentClassFromTitle(title: string) {
     if(title === "Actor") {
         return "compendium-of-actor";
     }
+    if(title === "Adventure") {
+        return "compendium-of-adventure";
+    }
     else if(title === "Cards") {
         return "compendium-of-card";
     }
