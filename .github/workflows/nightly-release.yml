@@ -1,0 +1,49 @@
+# Create a nightly release at every push
+name: Nightly Release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    uses: playest/compact-compendium-list/.github/workflows/build.yml@main # this should be replacable by .github/workflows/build.yml soon, see here: https://github.community/t/ref-head-in-reusable-workflows/203690/34
+    with:
+      version: "nightly"
+      leadingv: false
+  update-release: # add the artifacts to the release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get module-manifest
+        uses: actions/download-artifact@v2
+        with:
+          name: module-manifest
+      - name: Get module-archive
+        uses: actions/download-artifact@v2
+        with:
+          name: module-archive
+      - name: Get release
+        uses: joutvhu/get-release@v1
+        id: get_release
+        with:
+          tag_name: ${{ needs.build.outputs.version }}
+          throwing: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare release body Files
+        run: |
+          echo "${{ steps.get_release.outputs.body }}" | grep -v '^sha:' > release_body.md
+          echo "sha: ${{ github.sha }}" >> release_body.md
+          cat release_body.md
+      - name: Update Release with Files
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          name: ${{ needs.build.outputs.version }}
+          draft: false
+          prerelease: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: './${{ needs.build.outputs.manifest_filename }}, ./${{ needs.build.outputs.archive_filename }}'
+          tag: ${{ needs.build.outputs.version }}
+          omitNameDuringUpdate: true
+          bodyFile: release_body.md

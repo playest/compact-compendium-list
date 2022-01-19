@@ -1,0 +1,34 @@
+# Puts the module's archive and manifest into the release
+name: Populate Release
+on:
+  release:
+    types: [published]
+jobs:
+  build:
+    uses: playest/compact-compendium-list/.github/workflows/build.yml@main # this should be replacable by .github/workflows/build.yml soon, see here: https://github.community/t/ref-head-in-reusable-workflows/203690/34
+    with:
+      version: ${{ github.event.release.tag_name }}
+  update-release: # add the artifacts to the release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get module-manifest
+        uses: actions/download-artifact@v2
+        with:
+          name: module-manifest
+      - name: Get module-archive
+        uses: actions/download-artifact@v2
+        with:
+          name: module-archive
+      - name: Update Release with Files
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          name: v${{ needs.build.outputs.version }}
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: './${{ needs.build.outputs.manifest_filename }}, ./${{ needs.build.outputs.archive_filename }}'
+          tag: v${{ needs.build.outputs.version }}
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true

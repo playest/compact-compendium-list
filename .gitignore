@@ -3,4 +3,7 @@
 *.zip
 *.map
 *.css
-/releases
+
+/releases/
+/node_modules/
+/.vscode/

@@ -1,0 +1,17 @@
+*.ts
+*.md
+*.scss
+*.tgz
+*.zip
+*.map
+
+/package.json
+/package-lock.json
+/tsconfig.json
+
+/.git*
+/releases/
+/scripts/
+/releases/
+/node_modules/
+/.vscode/
