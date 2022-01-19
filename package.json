@@ -1,6 +1,6 @@
 {
   "name": "compact-compendium-list",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Better UI for the compendium packs tab. Clearer and more compact.",
   "main": "compact-compendium-list.js",
   "scripts": {

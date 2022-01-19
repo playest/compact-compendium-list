@@ -2,16 +2,25 @@ name: Build
 on:
   workflow_call:
     inputs:
-      version:
-        description: "The version number with or without a leading v"
-        required: true
-        type: string
-      leadingv:
-        description: "says if the version parameter has a leading v or not, so that it can be removed"
+      shortname:
+        description: "The shortname of the build, will be equal to the version if not given, will override the version if given"
         required: false
-        type: boolean
-        default: true
+        type: string
+        default: ""
+      version:
+        description: "The version number with a leading v. If not given it will default to the version field of the package.json file"
+        required: false
+        type: string
+        default: ""
+      prerelease_identifier:
+        description: "The pre-release field according to the semver specification"
+        required: false
+        type: string
+        default: ""
     outputs:
+      shortname:
+        value: ${{ jobs.build.outputs.shortname }}
+        description: "The shortname given to the release"
       version:
         value: ${{ jobs.build.outputs.version }}
         description: "The computed version number"
@@ -25,35 +34,62 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
+      shortname: ${{ steps.set_outputs.outputs.shortname }}
       version: ${{ steps.set_outputs.outputs.version }}
       manifest_filename: ${{ steps.set_outputs.outputs.manifest_filename }}
       archive_filename: ${{ steps.set_outputs.outputs.archive_filename }}
     steps:
-      - run: | # remove the leading "v" from the version string ("v1.2.3" -> "1.2.3")
-          if [ "${{ inputs.leadingv }}" = "true" ]; then echo "version=`echo ${{ inputs.version }} | cut -c 2-`" >> $GITHUB_ENV; else echo "version=${{ inputs.version }}" >> $GITHUB_ENV; fi
+      - uses: actions/checkout@v2
+      # remove the leading "v" from the version string ("v1.2.3" -> "1.2.3")
+      - run: |
+          version=""
+          if [ ! "${{inputs.version}}" ]
+          then
+            version=`jq -r .version package.json`
+          else
+            version=`echo ${{ inputs.version }} | cut -c 2-`
+          fi
+          
+          if [ "${{inputs.prerelease_identifier}}" ]
+          then
+            version=$version-${{inputs.prerelease_identifier}}
+          fi
+
+          if [ ! "${{inputs.shortname}}" ]
+          then
+            shortname=v$version
+          else
+            shortname=${{inputs.shortname}}
+          fi
+
+          echo "version=$version" >> $GITHUB_ENV
+          echo "shortname=$shortname" >> $GITHUB_ENV
+          echo shortname: $shortname, version: $version
       - name: Set outputs # so that they can be reused by caller if necessary
         id: set_outputs
         run: |
+          echo "::set-output name=shortname::${{ env.shortname }}"
           echo "::set-output name=version::${{ env.version }}"
           echo "::set-output name=manifest_filename::module.json"
-          echo "::set-output name=archive_filename::compact-compendium-list-${{ env.version }}.zip"
+          echo "::set-output name=archive_filename::compact-compendium-list-${{ env.shortname }}.zip"
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.1
         with:
           node-version: '16'
-      - uses: actions/checkout@v2
       - run: npm install
       - run: npm run build
-      - run: npm run packzip -- --set-version ${{ env.version }}
+      - run: npm run packzip -- --set-version ${{ env.version }} --set-shortname ${{ env.shortname }}
         env:
           NO_CHECK: 1
       - name: Upload module manifest
         uses: actions/upload-artifact@v2
         with:
           name: module-manifest
-          path: releases/v${{ env.version }}/module.json
+          path: releases/${{ env.shortname }}/module.json
+          if-no-files-found: error
       - name: Upload module archive
         uses: actions/upload-artifact@v2
         with:
           name: module-archive
-          path: releases/v${{ env.version }}/compact-compendium-list-${{ env.version }}.zip
+          path: releases/${{ env.shortname }}/compact-compendium-list-${{ env.shortname }}.zip
+          if-no-files-found: error
